@@ -1,0 +1,131 @@
+version: '3.7'
+
+# Volumes
+#================================================
+volumes:
+  lit-todo-back-db:
+
+services:
+
+  # Proxy
+  #----------------------------------------
+  lit-traefik:
+    image: traefik:v1.7.11-alpine
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8080"
+      - "traefik.frontend.entryPoints=traefik"
+      - "traefik.frontend.rule=Host:proxy.lit-todo.loc"
+      - "traefik.backend=traefik"
+      - "traefik.backend.loadbalancer.stickiness=true"
+      - "traefik.backend.loadbalancer.stickiness.cookieName=t_sticky"
+#    expose:
+#      - "8080"
+    ports:
+      - "80:80"
+#      - "443:443"
+      - "8080:8080" # The Web UI
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - type: bind
+        source: ./docker/lit-traefik/traefik.dev.toml
+        target: /etc/traefik/traefik.toml
+    #    - type: bind
+    #      source: ./docker/lit-traefik/tls/dev
+    #      target: /app/tls
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # Frontend
+  #----------------------------------------
+  lit-todo-front:
+    image: breitsmiley/lit-angular-dev:latest
+    #    environment:
+    #      - APP_D_ENTRYPOINT_MODE=init
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=4000"
+      - "traefik.frontend.entryPoints=http"
+      - "traefik.frontend.rule=Host:lit-todo.loc"
+      - "traefik.frontend.headers.customFrameOptionsValue=SAMEORIGIN"
+      - "traefik.frontend.headers.customResponseHeaders=X-Powered-By:||Server:"
+      - "traefik.backend=cf"
+      - "traefik.backend.loadbalancer.stickiness=true"
+      - "traefik.backend.loadbalancer.stickiness.cookieName=cf_sticky"
+    volumes:
+      - type: bind
+        source: ./apps/lit-todo-front
+        target: /app
+    expose:
+      - "${LIT_TODO_FRONT_DEV_PORT}"
+    #    ports:
+    #      - "4200"
+    #    working_dir: /app
+    command: ["npm", "run", "start_dw_dev"]
+#    command: ["ping", "127.0.0.1" ]
+    #    command: ["npm", "run", "build:universal"]
+    #    command: ["npm", "run", "server"]
+    #    command: ["npm", "start"]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+
+  # Backend
+  #----------------------------------------
+  lit-todo-back:
+    image: breitsmiley/lit-nest-dev:latest
+    #    environment:
+    #      - APP_D_ENTRYPOINT_MODE=init
+    #      - DEVITORY_NPM_TOKEN=${DEVITORY_NPM_TOKEN}
+    volumes:
+      -   type: bind
+          source: ./apps/lit-todo-back
+          target: /app
+    #    expose:
+    #      - "3000"
+    ports:
+      - "${LIT_DEBUG_PORT}:9229"
+      - "${LIT_HOST_HTTP_PORT}:3000"
+#    command: ["npm", "run", "start:dev"]
+    #    command: ["npm", "run", "start:debug"]
+    command: ["ping", "127.0.0.1"]
+    depends_on:
+      - lit-todo-back-db
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  lit-todo-back-db:
+    image: mysql:8.0.16
+    environment:
+      - MYSQL_DATABASE=lit
+      - MYSQL_USER=lit
+      - MYSQL_PASSWORD=lit
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - type: volume
+        source: lit-todo-back-db
+        target: /var/lib/mysql
+      - type: bind
+        source: ./docker/lit-todo-back-db/mysql-config-file.cnf
+        target: /etc/mysql/conf.d/config-file.cnf
+    #      - type: bind
+    #        source: ./docker/lit-todo-back-db/01_schema.sql
+    #        target: /docker-entrypoint-initdb.d/01_schema.sql
+    #      - type: bind
+    #        source: ./docker/lit-todo-back-db/02_fixtures.sql
+    #        target: /docker-entrypoint-initdb.d/02_fixtures.sql
+    #    expose:
+    #        - "${LIT_TODO_BACK_DB_PORT}"
+    ports:
+      - "${LIT_TODO_BACK_DB_PORT}:3306"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"

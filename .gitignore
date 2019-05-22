@@ -1,0 +1,5 @@
+.idea/
+.env
+
+/apps/lit-todo-back/
+/apps/lit-todo-front/
