@@ -1,11 +1,11 @@
 #!/bin/sh
 set -e
 
-#if [ "$APP_D_ENTRYPOINT_MODE" == 'init' ]; then
-#
-#    npm install
-#    echo "NPM INSTALL DONE"
-#
+if [ "$APP_D_ENTRYPOINT_MODE" == 'init' ]; then
+
+    npm install
+    echo "NPM INSTALL DONE"
+
 #    echo "1. Waiting for DB will be ready..."
 #    until ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm query "SELECT 1"; do
 #        sleep 7;
@@ -19,11 +19,11 @@ set -e
 #    echo "5. Making a little pause..."
 #    sleep 10
 #    echo "6. Start APP"
-#
-##        apk --no-cache add --virtual .native-deps \
-##        g++ gcc libgcc linux-headers make python && \
-##        npm install && \
-##        apk del .native-deps
-#fi
+
+#        apk --no-cache add --virtual .native-deps \
+#        g++ gcc libgcc linux-headers make python && \
+#        npm install && \
+#        apk del .native-deps
+fi
 
 exec "$@"

@@ -43,8 +43,8 @@ services:
   #----------------------------------------
   lit-todo-front:
     image: breitsmiley/lit-angular-dev:latest
-    #    environment:
-    #      - APP_D_ENTRYPOINT_MODE=init
+    environment:
+      - APP_D_ENTRYPOINT_MODE=init
     labels:
       - "traefik.enable=true"
       - "traefik.port=4000"
@@ -79,8 +79,8 @@ services:
   #----------------------------------------
   lit-todo-back:
     image: breitsmiley/lit-nest-dev:latest
-    #    environment:
-    #      - APP_D_ENTRYPOINT_MODE=init
+    environment:
+      - APP_D_ENTRYPOINT_MODE=init
     #      - DEVITORY_NPM_TOKEN=${DEVITORY_NPM_TOKEN}
     volumes:
       -   type: bind
