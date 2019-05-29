@@ -1,4 +1,5 @@
-ARG NODE_VERSION=12.2.0
+ARG NODE_VERSION=12.3.1
+ARG ANGULAR_CLI_VERSION=8.0.0
 
 FROM node:${NODE_VERSION}-alpine
 
@@ -14,7 +15,7 @@ COPY entrypoint-app.sh /usr/local/bin/entrypoint-app
 RUN chmod +x /usr/local/bin/entrypoint-app
 #	&& dos2unix /usr/local/bin/entrypoint-app
 
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@${ANGULAR_CLI_VERSION}
 
 # Create app directory
 WORKDIR /app

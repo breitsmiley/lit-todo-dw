@@ -2,7 +2,7 @@
 
 # DOCKER HUB Registry
 ##-------------------------------
-VERSION=0.0.3
+VERSION=0.0.4
 docker build -t breitsmiley/lit-angular-dev:latest -t breitsmiley/lit-angular-dev:${VERSION} . \
 && docker push breitsmiley/lit-angular-dev:latest \
 && docker push breitsmiley/lit-angular-dev:${VERSION}
