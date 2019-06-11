@@ -201,7 +201,7 @@ usebindportip = true
 # Optional
 # Default: false
 #
-swarmMode = false
+swarmMode = true
 
 # Enable docker TLS connection.
 #
@@ -232,14 +232,14 @@ swarmMode = false
 
     [entryPoints.https.tls]
      [[entryPoints.https.tls.certificates]]
-      certFile = "/etc/traefik/tls/lit-todo.loc.cert.pem"
-      keyFile = "/etc/traefik/tls/lit-todo.loc.key.pem"
+      certFile = "/etc/traefik/tls/lit-todo.pepelaz.in.ua.cert.pem"
+      keyFile = "/etc/traefik/tls/lit-todo.pepelaz.in.ua.key.pem"
     [[entryPoints.https.tls.certificates]]
-      certFile = "/etc/traefik/tls/api.lit-todo.loc.cert.pem"
-      keyFile = "/etc/traefik/tls/api.lit-todo.loc.key.pem"
+      certFile = "/etc/traefik/tls/api-lit-todo.pepelaz.in.ua.cert.pem"
+      keyFile = "/etc/traefik/tls/api-lit-todo.pepelaz.in.ua.key.pem"
     [[entryPoints.https.tls.certificates]]
-      certFile = "/etc/traefik/tls/proxy.lit-todo.loc.cert.pem"
-      keyFile = "/etc/traefik/tls/proxy.lit-todo.loc.key.pem"
+      certFile = "/etc/traefik/tls/proxy-lit-todo.pepelaz.in.ua.cert.pem"
+      keyFile = "/etc/traefik/tls/proxy-lit-todo.pepelaz.in.ua.key.pem"
 
 #    [entryPoints.https.whitelist]
 #      sourceRange = ["10.42.0.0/16", "152.89.1.33/32", "afed:be44::/16"]
@@ -315,7 +315,7 @@ swarmMode = false
 #       ]
      [entryPoints.traefik.auth.digest]
        users = [
-         "admin:traefik:786a8e38c8a01442ab24cfbae9c24890"
+         "admin:traefik:817374111f31cc282162486425ee5e9e"
        ]
 
  [entryPoints.ping]
