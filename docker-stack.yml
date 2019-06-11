@@ -124,7 +124,7 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.port=80"
-        - "traefik.frontend.entryPoints=http,https"
+        - "traefik.frontend.entryPoints=https"
         - "traefik.frontend.rule=Host:lit-todo.pepelaz.in.ua"
         - "traefik.frontend.headers.customFrameOptionsValue=SAMEORIGIN"
         - "traefik.frontend.headers.customResponseHeaders=X-Powered-By:||Server:"
@@ -154,7 +154,7 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.port=3000"
-        - "traefik.frontend.entryPoints=http,https"
+        - "traefik.frontend.entryPoints=https"
         - "traefik.frontend.rule=Host:api-lit-todo.pepelaz.in.ua"
         - "traefik.frontend.headers.customFrameOptionsValue=SAMEORIGIN"
         - "traefik.frontend.headers.customResponseHeaders=X-Powered-By:||Server:"

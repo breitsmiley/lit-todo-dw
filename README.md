@@ -32,4 +32,10 @@ ts-node ./node_modules/typeorm/cli.js migration:run
 
 docker build -t breitsmiley/lit-todo-front-prod:latest -t breitsmiley/lit-todo-front-prod:0.0.1 . \
 docker build -t breitsmiley/lit-todo-back-prod:latest -t breitsmiley/lit-todo-back-prod:0.0.1 . \
+docker push breitsmiley/lit-todo-front-prod:latest
+docker push breitsmiley/lit-todo-front-prod:0.0.1
+
+docker push breitsmiley/lit-todo-back-prod:latest
+docker push breitsmiley/lit-todo-back-prod:0.0.1
+
 docker stack deploy --compose-file docker-stack.yml stackdemo
