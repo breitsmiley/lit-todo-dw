@@ -6,13 +6,13 @@ BUILD_ENV="dev"
 #================================================
 function lit-todo-front {
     cd ${APPS_DIR}
-    git clone -b dev git@github.com:breitsmiley/lit-todo-front.git lit-todo-front \
+    git clone -b dev https://github.com/breitsmiley/lit-todo-dw.git lit-todo-front \
     && cd lit-todo-front
 }
 
 function lit-todo-back {
     cd ${APPS_DIR}
-    git clone -b dev git@github.com:breitsmiley/lit-todo-back.git lit-todo-back \
+    git clone -b dev https://github.com/breitsmiley/lit-todo-back lit-todo-back \
     && cd lit-todo-back \
     && cp .env.dist .env
 }
